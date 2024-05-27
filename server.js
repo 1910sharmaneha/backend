@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const port = 5000 || process.env.PORT;
+const port =  process.env.PORT;
 const url = 'mongodb+srv://1910sharmaneha:Sunset@cluster0.5toireo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const database = 'Exam';
 
