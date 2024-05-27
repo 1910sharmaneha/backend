@@ -19,6 +19,10 @@ async function connect() {
     const db = client.db(database);
     const bill = db.collection("bill");
 
+     app.get('/', (req, res) => {
+      res.send('Welcome to the CRUD API');
+    });
+
     app.get('/search', async (req, res) => {
       const n = req.query.ID;
       if (!n) {
