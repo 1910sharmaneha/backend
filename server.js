@@ -118,10 +118,79 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+<<<<<<< HEAD
 const port = process.env.PORT || 3000;
 
 async function connect() {
   console.log("Pretend to connect to MongoDB server");
+=======
+const port =  process.env.PORT;
+const url = 'mongodb+srv://1910sharmaneha:Sunset@cluster0.5toireo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const database = 'Exam';
+
+async function connect() {
+  try {
+    const client = new MongoClient(url);
+    await client.connect();
+    console.log("Connected to Mongo server");
+
+    const db = client.db(database);
+    const bill = db.collection("bill");
+
+     app.get('/', async (req, res) => {
+    try {
+        const rese = await bill.find().toArray();
+        return res.json(rese);
+    } catch (err) {
+        return res.status(400).json("Unable to get data, can't connect to Mongo");
+    }
+});
+
+    app.get('/search', async (req, res) => {
+      const n = req.query.ID;
+      if (!n) {
+        res.json({ message: 'Missing parameters' });
+      } else {
+        const name = await bill.findOne({ ID: n });
+        if (name) {
+          res.json({ message: 'User found', name });
+        } else {
+          res.json({ message: "User not found" });
+        }
+      }
+    });
+
+    app.get('/difference', async (req, res) => {
+        const n = req.query.ID;
+        if (!n) {
+            res.json({ message: 'Missing parameters' });
+        } else {
+            const user = await bill.findOne({ ID: n });
+            if (user) {
+                const start = user.Start;
+                const end = user.End;
+                const difference = end - start;
+                res.json({ message: 'Difference calculated', difference });
+            } else {
+                res.json({ message: "User not found" });
+            }
+        }
+    });
+    
+
+    app.get('/searchAll', async (req, res) => {
+        
+            const rese=await bill.find().toArray();
+
+            return res.json({rese});
+    
+      });
+      app.post('/insert', async (req, res) => {
+        const {ID,Start,End}=req.body;
+        const ins=await bill.insertOne({Start,ID,End});
+
+        return res.json({message:'Inserted values successfully'});
+>>>>>>> origin/main
 
   // Search by ID
   app.get('/search', async (req, res) => {
