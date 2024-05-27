@@ -19,9 +19,14 @@ async function connect() {
     const db = client.db(database);
     const bill = db.collection("bill");
 
-     app.get('/', (req, res) => {
-      res.send('Welcome to the CRUD API');
-    });
+     app.get('/', async (req, res) => {
+    try {
+        const rese = await bill.find().toArray();
+        return res.json(rese);
+    } catch (err) {
+        return res.status(400).json("Unable to get data, can't connect to Mongo");
+    }
+});
 
     app.get('/search', async (req, res) => {
       const n = req.query.ID;
