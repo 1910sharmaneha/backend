@@ -123,7 +123,7 @@ const port = process.env.PORT || 3000;
 
 async function connect() {
   console.log("Pretend to connect to MongoDB server");
-=======
+
 const port =  process.env.PORT;
 const url = 'mongodb+srv://1910sharmaneha:Sunset@cluster0.5toireo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const database = 'Exam';
